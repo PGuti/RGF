@@ -1,4 +1,3 @@
-import pandas as pd
 import subprocess
 import os
 import numpy as np
@@ -50,6 +49,10 @@ class RGF_Model() :
         self.last_model = None
         
     def fit(self, X, y) :
+
+        # remap : assume you give 0,1 and we want -1, 1
+        y = 2 *y -1
+
         # write data
         if self.verbose : 
             print "writing data"
@@ -109,8 +112,6 @@ class RGF_Model() :
                     while p.poll() is None:
                         output = p.stdout.readline()
                         print output                
-                        
-    
     
     def predict_probas(self,X, keeplast = True) :        
         
@@ -121,7 +122,7 @@ class RGF_Model() :
                 mypreds = sigmoid(np.loadtxt(thefile))
                 mypreds = np.vstack((1-mypreds,mypreds)).T
         else : 
-            for root, dirs, files in os.walk(self.output_path_models) :
+            for files in os.listdir(self.output_path_models) :
                 pass
                 # TODO
             
@@ -134,29 +135,10 @@ class RGF_Model() :
     
         if keeplast :
             with open(self.output_path_preds + '/' + self.last_model + '.pred','rb') as thefile:
-                mypreds = (sigmoid(np.loadtxt(thefile)) >= 0.5).astype(int)
+                mypreds = (sigmoid(np.loadtxt(thefile)) >= 0.5).astype(int) # only work for classif
         else : 
-            for root, dirs, files in os.walk(self.output_path_models) :
+            for files in os.listdir(self.output_path_models) :
                 pass
                 # TODO
             
         return mypreds
-    
-    
-'''
-TO DO : 
-
-- separate models from predictions
-- enable user to drop data after fit
-- check how to make all params to work
-- warm start, ... 
-- add some check on input formats and isfitted etc
-- separate write from else. 
-- integrate remapping of target
-- integrate possibility of .info for eval. check NormalizeTarget
-- add sparse support. 
-- add weight support.
-- separate into classifier and regressor
-'''    
-    
-    
