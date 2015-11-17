@@ -48,7 +48,7 @@ class RGF_Model() :
         self.test_written = False
         self.last_model = None
         # classes temp hack
-        self.classes_ = ['class_0',"class_1"]
+        self.classes_ = [0,1]
 
         
     def fit(self, X, y) :
