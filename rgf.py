@@ -93,7 +93,7 @@ class RGF_Model() :
         # write data
         if self.verbose : 
             print 'writing test data'
-        np.savetxt(self.test_path + '/testx.txt', xtest, delimiter=' ')
+        np.savetxt(self.test_path + '/testx.txt', X, delimiter=' ')
         if self.verbose : 
             print 'test data written'
     
@@ -116,7 +116,7 @@ class RGF_Model() :
                         output = p.stdout.readline()
                         print output                
     
-    def predict_probas(self,X, keeplast = True) :        
+    def predict_proba(self,X, keeplast = True) :        
         
         self.build_predictions(X)
         
