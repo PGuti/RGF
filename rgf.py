@@ -98,7 +98,7 @@ class RGF_Model() :
             print 'test data written'
     
         # this is my dir 
-        files = os.listdir(rgf.output_path_models) 
+        files = os.listdir(self.output_path_models) 
         for thefile in files : 
             if thefile.startswith("m-") : 
                 with open (self.tmp_path+'/temp_pred.inp', 'w') as fp:
